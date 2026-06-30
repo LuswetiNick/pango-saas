@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "db:deploy": "pnpm --filter @workspace/db db:deploy",
+    "db:generate": "pnpm --filter @workspace/db db:generate",
+    "db:migrate": "pnpm --filter @workspace/db db:migrate",
+    "db:studio": "pnpm --filter @workspace/db db:studio",
+    "db:validate": "pnpm --filter @workspace/db db:validate",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "turbo format",
@@ -23,6 +28,6 @@
   },
   "packageManager": "pnpm@11.9.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19"
   }
 }

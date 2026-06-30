@@ -3,8 +3,10 @@ packages:
   - "packages/*"
 
 allowBuilds:
+  "@prisma/engines": true
   sharp: true
   unrs-resolver: true
   msw: false
   esbuild: true
   opensrc: true
+  prisma: true

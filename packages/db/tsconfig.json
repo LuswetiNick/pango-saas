@@ -1,0 +1,11 @@
+{
+  "extends": "@workspace/typescript-config/base.json",
+  "compilerOptions": {
+    "paths": {
+      "@workspace/db": ["./src/index.ts"],
+      "@workspace/db/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "generated", "prisma.config.ts"],
+  "exclude": ["node_modules"]
+}

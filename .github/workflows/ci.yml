@@ -38,6 +38,16 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Prisma validate
+        run: pnpm db:validate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/pango?schema=public
+
+      - name: Prisma generate
+        run: pnpm db:generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/pango?schema=public
+
       - name: Typecheck
         run: pnpm typecheck
 
