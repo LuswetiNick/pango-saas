@@ -1,0 +1,70 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AppRole {
+  LANDLORD
+  TENANT
+  ADMIN
+  SUPPORT
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  CLOSED
+}
+
+enum MembershipStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+  REMOVED
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String?
+  phone       String?      @unique
+  image       String?
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @db.Timestamptz(3)
+  memberships Membership[]
+
+  @@map("users")
+}
+
+model Account {
+  id          String        @id @default(cuid())
+  name        String
+  status      AccountStatus @default(ACTIVE)
+  createdAt   DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime      @updatedAt @db.Timestamptz(3)
+  memberships Membership[]
+
+  @@map("accounts")
+}
+
+model Membership {
+  id        String           @id @default(cuid())
+  userId    String
+  accountId String
+  role      AppRole
+  status    MembershipStatus @default(ACTIVE)
+  createdAt DateTime         @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime         @updatedAt @db.Timestamptz(3)
+  account   Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, accountId])
+  @@index([accountId, role])
+  @@index([userId, status])
+  @@map("memberships")
+}
